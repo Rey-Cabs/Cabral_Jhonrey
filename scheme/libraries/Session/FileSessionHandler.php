@@ -78,7 +78,6 @@ class FileSessionHandler extends Session implements SessionHandlerInterface {
      * @return bool
      */
     public function open($save_path, $session_name): bool {
-    // If $save_path is empty or invalid, use /tmp/sessions as fallback
     if (empty($save_path) || !is_dir($save_path) && !@mkdir($save_path, 0700, true)) {
         $save_path = '/tmp/sessions';
     }
