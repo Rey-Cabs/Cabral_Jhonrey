@@ -31,6 +31,7 @@
             <th>Level</th>
             <th>Action</th>
         </tr>
+        <?php if(!empty($all)): ?>
         <?php foreach($all as $user): ?>
             <tr>
                 <td><?= $user['id']; ?></td>
@@ -43,6 +44,13 @@
                 </td>
             </tr>
         <?php endforeach; ?>
+         <?php else:?>
+            <tr>
+                <td colspan='5'>
+                    No Adventurers Found.
+                </td>
+            </tr>
+        <?php endif;?>    
     </table>
     <?php
 	echo $page;?>
