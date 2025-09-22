@@ -48,47 +48,120 @@ class User_Controller extends Controller {
     }
     //pasok
     function create()
-    {
-        if($this->io->method() == 'post'){
-            $Name = $this->io->post('Name');
-            $Class = $this->io->post('Class');
-            $Level = $this->io->post('Level');
-            $data = array(
-                'Name'=> $Name,
-                'Class'=> $Class,
-                'Level'=> $Level
-            );
-            if($this->User_Model->insert($data))
-            {
-                redirect('/user/show');
-            }else{
-                echo'Error';
+{
+    if ($this->io->method() == 'post') {
+        $Name  = $this->io->post('Name');
+        $Class = $this->io->post('Class');
+        $Level = $this->io->post('Level');
+        $Weapon = null;
+        $WeaponName = null;
+        if (isset($_FILES['Weapon']) && $_FILES['Weapon']['error'] !== UPLOAD_ERR_NO_FILE) {
+            if (isset($_FILES['Weapon']['tmp_name']) && isset($_FILES['Weapon']['name']) && isset($_FILES['Weapon']['size'])) {
+                $original_name = pathinfo($_FILES['Weapon']['name'], PATHINFO_FILENAME);
+                
+                $this->call->library('upload', $_FILES['Weapon']);
+                $this->upload
+                    ->max_size(5)
+                    ->min_size(0.01) 
+                    ->set_dir('public/Weapons')
+                    ->allowed_extensions(['jpg','jpeg','png','gif'])
+                    ->allowed_mimes(['image/jpeg','image/png','image/gif'])
+                    ->is_image()
+                    ->encrypt_name();
+                
+                if ($this->upload->do_upload()) {
+                    $Weapon = $this->upload->get_filename();
+                    $WeaponName = $original_name; 
+                } else {
+                    echo "Upload Error: ";
+                    print_r($this->upload->get_errors());
+                    exit; 
+                }
+            } else {
+                echo "Error: Invalid file upload structure!";
+                exit;
             }
-        }else{
-        $this->call->view('create');}
+        } else {
+            echo "Error: Weapon image is required!";
+            exit;
+        }
+
+        $data = [
+            'Name'   => $Name,
+            'Class'  => $Class,
+            'Level'  => $Level,
+            'Weapon' => $Weapon,
+            'Weapon_Name' => $WeaponName
+        ];
+
+        if ($this->User_Model->insert($data)) {
+            redirect('/user/show');
+        } else {
+            echo 'Error saving adventurer!';
+        }
+    } else {
+        $this->call->view('create');
     }
+}
     //edit
-    function update($id)
-    {
-        $data ['user'] = $this->User_Model->find($id);
-        if($this->io->method() == 'post'){
-            $Name = $this->io->post('Name');
-            $Class = $this->io->post('Class');
-            $Level = $this->io->post('Level');
-            $data = array(
-                'Name'=> $Name,
-                'Class'=> $Class,
-                'Level'=> $Level
-            );
-            if($this->User_Model->update($id,$data))
-            {
-                redirect('/user/show');
-            }else{
-                redirect('/user/update/'.$id);
+   function update($id)
+{
+    $data['user'] = $this->User_Model->find($id);
+
+    if($this->io->method() == 'post'){
+        $Name  = $this->io->post('Name');
+        $Class = $this->io->post('Class');
+        $Level = $this->io->post('Level');
+
+        $updateData = array(
+            'Name'  => $Name,
+            'Class' => $Class,
+            'Level' => $Level
+        );
+        if (isset($_FILES['Weapon']) && $_FILES['Weapon']['error'] !== UPLOAD_ERR_NO_FILE) {
+            if (isset($_FILES['Weapon']['tmp_name']) && isset($_FILES['Weapon']['name']) && isset($_FILES['Weapon']['size'])) {
+                $original_name = pathinfo($_FILES['Weapon']['name'], PATHINFO_FILENAME);
+                
+                $this->call->library('upload', $_FILES['Weapon']);
+                $this->upload
+                    ->max_size(5)
+                    ->min_size(0.01) 
+                    ->set_dir('public/Weapons')
+                    ->allowed_extensions(['jpg','jpeg','png','gif'])
+                    ->allowed_mimes(['image/jpeg','image/png','image/gif'])
+                    ->is_image()
+                    ->encrypt_name();
+                
+                if ($this->upload->do_upload()) {
+                    if (!empty($data['user']['Weapon'])) {
+                        $oldFile = 'public/Weapons/' . $data['user']['Weapon'];
+                        if (file_exists($oldFile)) {
+                            unlink($oldFile);
+                        }
+                    }
+                    $updateData['Weapon'] = $this->upload->get_filename();
+                    $updateData['Weapon_Name'] = $original_name;
+                } else {
+                    echo "Upload Error: ";
+                    print_r($this->upload->get_errors());
+                    exit; 
+                }
+            } else {
+                echo "Error: Invalid file upload structure!";
+                exit;
             }
         }
-        $this->call->view('update',$data);
+
+        if ($this->User_Model->update($id, $updateData)) {
+            redirect('/user/show');
+        } else {
+            redirect('/user/update/'.$id);
+        }
     }
+
+    $this->call->view('update', $data);
+}
+
     //tanggal
     function delete($id)
     {
@@ -151,5 +224,10 @@ class User_Controller extends Controller {
         }else{
             echo'Error';
         }
+    }
+    function view($id)
+    {
+        $data['user'] = $this->User_Model->find($id);
+        $this->call->view('Inspect', $data);
     }
 }

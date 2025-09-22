@@ -28,7 +28,7 @@ class User_Model extends Model {
                       ->or_like('Name', '%'.$q.'%')
                       ->or_like('Level', '%'.$q.'%')
                       ->or_like('Class', '%'.$q.'%');
-            }
+         }
             $query->order_by('id', 'ASC');
 
                 // Clone before pagination

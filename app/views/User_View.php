@@ -9,19 +9,19 @@
 <body>
     
     <div class="header-row">
-    <h1>Adventurer's List</h1>
+        <h1>Adventurer's List</h1>
 
-    <form action="<?=site_url('user/show');?>" method="get">
-        <?php
-        $q = '';
-        if(isset($_GET['q'])) {
-            $q = $_GET['q'];
-        }
-        ?>
-        <input class="search" name="q" type="text" placeholder="Search" value="<?=html_escape($q);?>">
-        <button type="submit" class="btn">Search</button>
-    </form>
-</div>
+        <form action="<?=site_url('user/show');?>" method="get">
+            <?php
+            $q = '';
+            if(isset($_GET['q'])) {
+                $q = $_GET['q'];
+            }
+            ?>
+            <input class="search" name="q" type="text" placeholder="Search" value="<?=html_escape($q);?>">
+            <button type="submit" class="btn">Search</button>
+        </form>
+    </div>
 
     <table class="guild-table">
         <tr>
@@ -29,9 +29,11 @@
             <th>Name</th>
             <th>Class</th>
             <th>Level</th>
+            <th>Weapon</th> 
             <th>Action</th>
+            <th>View</th>
         </tr>
-        <?php if(!empty($all)): ?>
+        <?php if(!empty($all)):?>
         <?php foreach($all as $user): ?>
             <tr>
                 <td><?= $user['id']; ?></td>
@@ -39,21 +41,29 @@
                 <td><?= $user['Class']; ?></td>
                 <td><?= $user['Level']; ?></td>
                 <td>
+                    <?php if (!empty($user['Weapon_Name'])): ?>
+                        <span style="font-weight: bold; color: #8B4513; font-size: 14px;"><?= htmlspecialchars($user['Weapon_Name']); ?></span>
+                    <?php else: ?>
+                        <span style="color: #999;">No Weapon</span>
+                    <?php endif; ?>
+                </td>
+                <td>
                     <a href="<?= site_url('/user/update/'.$user['id']); ?>" class="btn">Update</a> | 
                     <a href="<?= site_url('/user/soft_delete/'.$user['id']); ?>" class="btn danger">Delete</a>
                 </td>
+                <td><a href="<?= site_url('/user/view/'.$user['id']); ?>" class="btn create">👁️</a></td>
             </tr>
         <?php endforeach; ?>
-         <?php else:?>
+        <?php else:?>
             <tr>
-                <td colspan='5'>
+                <td colspan='7'>
                     No Adventurers Found.
                 </td>
             </tr>
         <?php endif;?>    
     </table>
-    <?php
-	echo $page;?>
+
+    <?php echo $page; ?>
 	</div>
 
     <div class="actions">

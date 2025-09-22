@@ -28,16 +28,23 @@
             <th>Name</th>
             <th>Class</th>
             <th>Level</th>
+            <th>Weapon</th> 
             <th>Deleted At</th>
             <th>Action</th>
         </tr>
-        <?php if(!empty($users)):?>
         <?php foreach($users as $user):?>
             <tr>
                 <td><?= $user['id']; ?></td>
                 <td><?= $user['Name']; ?></td>
                 <td><?= $user['Class']; ?></td> 
                 <td><?= $user['Level']; ?></td>
+                <td>
+                    <?php if (!empty($user['Weapon_Name'])): ?>
+                        <span style="font-weight: bold; color: #8B4513; font-size: 14px;"><?= htmlspecialchars($user['Weapon_Name']); ?></span>
+                    <?php else: ?>
+                        <span style="color: #999;">No Weapon</span>
+                    <?php endif; ?>
+                </td>
                 <td><?= $user['deleted_at']; ?></td>
                 <td>
                     <a href="<?= site_url('/user/retrieve/'.$user['id']); ?>" class="btn">Restore</a> | 
@@ -45,13 +52,6 @@
                 </td>
             </tr>
         <?php endforeach; ?>
-        <?php else:?>
-            <tr>
-                <td colspan='5'>
-                    No Adventurers Found.
-                </td>
-            </tr>
-        <?php endif;?>    
     </table>
     <?php
 	echo $page;?>

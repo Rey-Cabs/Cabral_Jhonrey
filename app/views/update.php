@@ -11,7 +11,7 @@
     <h1>Ascend</h1>
 
     <div class="form-box">
-        <form action="<?= site_url('/user/update/'.$user['id']); ?>" method="post">
+        <form action="<?= site_url('/user/update/'.$user['id']); ?>" method="post" enctype="multipart/form-data">
             
             <label for="Name">Name</label><br>
             <input type="text" name="Name" id="Name" 
@@ -26,11 +26,21 @@
             <label for="Class">Class</label><br>
             <select name="Class" id="Class" class="form-input">
                 <option value="Swordsman" <?= $user['Class'] == 'Swordsman' ? 'selected' : ''; ?>>Swordsman</option>
+                <option value="Heavy Swordsman" <?= $user['Class'] == 'Heavy Swordsman' ? 'selected' : ''; ?>>Heavy Swordsman</option>
                 <option value="Mage" <?= $user['Class'] == 'Mage' ? 'selected' : ''; ?>>Mage</option>
                 <option value="Archer" <?= $user['Class'] == 'Archer' ? 'selected' : ''; ?>>Archer</option>
-                <option value="Assassin" <?= $user['Class'] == 'Assassin' ? 'selected' : ''; ?>>Assassin</option>
-                <option value="Tank" <?= $user['Class'] == 'Tank' ? 'selected' : ''; ?>>Tank</option>
+                <option value="Spearman" <?= $user['Class'] == 'Spearman' ? 'selected' : ''; ?>>Spearman</option>
             </select><br><br>
+
+            <label for="Weapon">Current Weapon: 
+                <?php if (!empty($user['Weapon_Name'])): ?>
+                    <strong><?= htmlspecialchars($user['Weapon_Name']); ?></strong>
+                <?php else: ?>
+                    <em>No Weapon</em>
+                <?php endif; ?>
+            </label><br>
+            <label for="Weapon">Change Weapon (Optional)</label><br>
+            <input type="file" name="Weapon" id="Weapon" class="form-input" accept="image/*"><br><br>
 
             <input type="submit" value="⚔️ Ascend" class="btn create">
             <a href="<?= site_url('/'); ?>" class="btn danger">❌ Cancel</a>

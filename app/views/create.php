@@ -11,7 +11,7 @@
     <h1>Recruit</h1>
 
     <div class="form-box">
-        <form action="<?= site_url('/user/create'); ?>" method="post">
+        <form action="<?= site_url('/user/create'); ?>" method="post" enctype="multipart/form-data">
             <label for="Name">Name</label><br>
             <input type="text" name="Name" id="Name" class="form-input" required><br><br>
 
@@ -22,11 +22,15 @@
             <select name="Class" id="Class" class="form-input" required>
                 <option value="">Select Class</option>
                 <option value="Swordsman">Swordsman</option>
+                <option value="Heavy Swordsman">Heavy Swordsman</option>
                 <option value="Mage">Mage</option>
                 <option value="Archer">Archer</option>
-                <option value="Assassin">Assassin</option>
-                <option value="Tank">Tank</option>
+                <option value="Spearman">Spearman</option>
             </select><br><br>
+
+            <label for="Weapon">Choose your Weapon</label><br>
+            <input type="file" name="Weapon" id="Weapon" class="form-input" placeholder="Upload your Weapon" required ><br><br>
+
             <input type="submit" value="➕ Recruit" class="btn create"><br>
             <a href="<?= site_url('/user/restore/'); ?>" class="btn create">🔄 Restore</a>
             <a href="<?= site_url('/user/show/'); ?>" class="btn create">📃 List</a>
