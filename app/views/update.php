@@ -26,10 +26,10 @@
             <label for="Class">Class</label><br>
             <select name="Class" id="Class" class="form-input">
                 <option value="Swordsman" <?= $user['Class'] == 'Swordsman' ? 'selected' : ''; ?>>Swordsman</option>
-                <option value="Heavy Swordsman" <?= $user['Class'] == 'Heavy Swordsman' ? 'selected' : ''; ?>>Heavy Swordsman</option>
-                <option value="Mage" <?= $user['Class'] == 'Mage' ? 'selected' : ''; ?>>Mage</option>
-                <option value="Archer" <?= $user['Class'] == 'Archer' ? 'selected' : ''; ?>>Archer</option>
-                <option value="Spearman" <?= $user['Class'] == 'Spearman' ? 'selected' : ''; ?>>Spearman</option>
+                <option value="Warrior" <?= $user['Class'] == 'Warrior' ? 'selected' : ''; ?>>Warrior</option>
+                <option value="Catalyst" <?= $user['Class'] == 'Catalyst' ? 'selected' : ''; ?>>Catalyst</option>
+                <option value="Marksman" <?= $user['Class'] == 'Marksman' ? 'selected' : ''; ?>>Marksman</option>
+                <option value="Lancer" <?= $user['Class'] == 'Lancer' ? 'selected' : ''; ?>>Lancer</option>
             </select><br><br>
 
             <label for="Weapon">Current Weapon: 
@@ -43,7 +43,7 @@
             <input type="file" name="Weapon" id="Weapon" class="form-input" accept="image/*"><br><br>
 
             <input type="submit" value="⚔️ Ascend" class="btn create">
-            <a href="<?= site_url('/'); ?>" class="btn danger">❌ Cancel</a>
+            <a href="<?= site_url('/user/show'); ?>" class="btn danger">❌ Cancel</a>
         </form>
     </div>
 </body>

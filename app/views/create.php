@@ -22,10 +22,10 @@
             <select name="Class" id="Class" class="form-input" required>
                 <option value="">Select Class</option>
                 <option value="Swordsman">Swordsman</option>
-                <option value="Heavy Swordsman">Heavy Swordsman</option>
-                <option value="Mage">Mage</option>
-                <option value="Archer">Archer</option>
-                <option value="Spearman">Spearman</option>
+                <option value="Warrior">Warrior</option>
+                <option value="Catalyst">Catalyst</option>
+                <option value="Marksman">Marksman</option>
+                <option value="Lancer">Lancer</option>
             </select><br><br>
 
             <label for="Weapon">Choose your Weapon</label><br>
