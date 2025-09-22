@@ -50,3 +50,4 @@ $router->get('/user/delete/{Id}', 'User_Controller::delete');
 $router->get('/user/soft_delete/{Id}', 'User_Controller::soft_delete');
 $router->get('/user/restore', 'User_Controller::restore');
 $router->get('/user/retrieve/{Id}', 'User_Controller::retrieve');
+$router->get('/user/view/{Id}', 'User_Controller::view');
